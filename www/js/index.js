@@ -34,6 +34,23 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+        function onSuccess(acceleration) {
+            var parentElement = document.getElementById('accelerometer');
+            var x = parentElement.querySelector('.x');
+            x.innerHTML = acceleration.x;
+            var y = parentElement.querySelector('.y');
+            y.innerHTML = acceleration.y;
+            var z = parentElement.querySelector('.z');
+            z.innerHTML = acceleration.z;
+        }
+
+        function onError() {
+            alert('onError!');
+        }
+
+        var options = { frequency: 100 };  // Update every 3 seconds
+        var watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

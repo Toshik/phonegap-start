@@ -20,8 +20,11 @@
         Enable individual API permissions here.
         The "device" permission is required for the 'deviceready' event.
     -->
-    <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="http://api.phonegap.com/3.0/device" />
 
+    <feature name="Accelerometer">
+        <param name="android-package" value="org.apache.cordova.AccelListener" />
+    </feature>
     <!--
         If you do not want any permissions to be added to your app, add the
         following tag to your config.xml; you will still have the INTERNET
