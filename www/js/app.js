@@ -29,7 +29,7 @@ angular.module('myApp', ['ajoslin.mobile-navigate'])
     .controller('MainCtrl', function($scope, $navigate) {
         $scope.$navigate = $navigate;
     })
-    .directive('ngTap', function() {
+/*    .directive('ngTap', function() {
         var isTouchDevice = !!("ontouchstart" in window);
         return function(scope, elm, attrs) {
             if (isTouchDevice) {
@@ -45,7 +45,39 @@ angular.module('myApp', ['ajoslin.mobile-navigate'])
                 });
             }
         };
+    })*/
+
+    .directive('ngTap', function() {
+        return function(scope, element, attrs) {
+            var tapping;
+            tapping = false;
+            var movetime = 0;
+            var elm = null;
+            element.bind('touchstart', function(e) {
+                console.log('touchstart');
+                element.addClass('active');
+                tapping = true;
+                elm = element;
+            });
+            element.bind('touchmove', function(e) {
+                element.removeClass('active');
+                console.log('touchmove: ' + (e.timeStamp - movetime));
+                if (movetime == 0)
+                    movetime = e.timeStamp;
+                else if (e.timeStamp - movetime > 300)
+                {
+                    movetime = 0;
+                    tapping = false;
+                }
+            });
+            element.bind('touchend', function(e) {
+                element.removeClass('active');
+                console.log('touchend');
+                if (tapping) {
+                    scope.$apply(attrs['ngTap'], element);
+                }
+            });
+        };
     });
-/**
- * Created by toshi_000 on 03.10.13.
- */
+
+;
