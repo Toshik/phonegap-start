@@ -1,0 +1,26 @@
+<div class="toolbar">
+    <h1>Backwards</h1>
+</div>
+<div class="panel content">
+    <form id="login-form" name="loginForm" action="http://hostpost.org/api/test.php" method="post"
+          ng-controller="formController" ng-submit="submit()">
+        <ul>
+            <li>
+                <input type="text"
+                       ng-minlength="3" ng-maxlength="10"
+                       ng-required="true"
+                       id="user_username"
+                       ng-model="user.name"
+                       name="userName"
+                       placeholder="Имя пользователя">
+
+            </li>
+            <li>
+                <input ng-disabled="loginForm.$invalid" class="btn btn-primary btn-block" type="submit" name="commit"
+                       value="Войти"/>
+            </li>
+
+            <li><a ng-tap="$navigate.go('/')">OK, take me home again!</a></li>
+        </ul>
+    </form>
+</div>

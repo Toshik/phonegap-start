@@ -13,6 +13,9 @@ angular.module('myApp', ['ajoslin.mobile-navigate'])
             }).when("/backwards", {
                 templateUrl: "content/backwards.html",
                 reverse: true
+            }).when("/login", {
+                templateUrl: "content/login.html",
+                reverse: true
             }).when("/", {
                 templateUrl: "content/home.html"
             }).otherwise({
@@ -60,12 +63,12 @@ angular.module('myApp', ['ajoslin.mobile-navigate'])
                 elm = element;
             });
             element.bind('touchmove', function(e) {
-                element.removeClass('active');
                 console.log('touchmove: ' + (e.timeStamp - movetime));
                 if (movetime == 0)
                     movetime = e.timeStamp;
                 else if (e.timeStamp - movetime > 300)
                 {
+                    element.removeClass('active');
                     movetime = 0;
                     tapping = false;
                 }
@@ -80,4 +83,22 @@ angular.module('myApp', ['ajoslin.mobile-navigate'])
         };
     });
 
-;
+function formController($scope, $http, $templateCache){
+    $scope.submit=function(){
+        $scope.url = "http://hostpost.org/api/test.php";
+//        $scope.url = "content/monkey.html";
+        $scope.method = "GET";
+
+        $http({method: $scope.method, url: $scope.url, cache: $templateCache}).
+            success(function(data, status) {
+                $scope.status = status;
+                $scope.data = data;
+                alert($scope.status + ' = ' + $scope.data)
+            }).
+            error(function(data, status) {
+                $scope.data = data || "Request failed";
+                $scope.status = status;
+                alert($scope.status + ' = ' + $scope.data)
+            });
+    }
+}
